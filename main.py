@@ -19,20 +19,20 @@ driver=webdriver.Chrome(service=service)
 driver.get(website)
 
 
-#login to linkedin
+# #login to linkedin
 elementID=driver.find_element(by="id",value='username')
 elementID.send_keys(my_username)
 elementID=driver.find_element(by="id",value='password')
 elementID.send_keys(my_password)
 elementID.submit()
-
+#
 
 
 
 #for posting post
 # l=driver.find_element(by="xpath",value='/html/body/div[5]/div[3]/div/div/div[2]/div/div/main/div[1]/div/div[1]/button')
 # driver.execute_script("arguments[0].click();",l)
-time.sleep(5)
+time.sleep(30)
 # writer=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[2]/div/div/div[1]/div[2]/div/div/div[2]/div/div/div[1]')
 # driver.execute_script("arguments[0].click();",writer)
 # writer.send_keys("Hello, I am testing my automation Bot Today here")
@@ -45,13 +45,12 @@ time.sleep(5)
 
 
 def searchhr(query):
-    website2 = "https://www.linkedin.com/search/results/all/?keywords="+query
-    # service = Service(executable_path='/home/sanju/Downloads/chromedriver')
-    # driver = webdriver.Chrome(service=service)
+    website2 = "https://www.linkedin.com/search/results/people/?keywords="+query+"&origin=SWITCH_SEARCH_VERTICAL&sid=AYI"
     driver.get(website2)
+    time.sleep(3)
     # filter only hr
-    hrlist = driver.find_element(by="xpath",value='//*[@id="search-reusables__filters-bar"]/ul/li[1]/button')
-    driver.execute_script("arguments[0].click();", hrlist)
+    # hrlist = driver.find_element(by="xpath",value='/html/body/div[5]/div[3]/div[2]/section/div/nav/div/ul/li[4]/button')
+    # driver.execute_script("arguments[0].click();", hrlist)
 
 query="tcs%20hr"
 searchhr(query)
@@ -66,13 +65,26 @@ profilesQueued=[]
 time.sleep(5)
 containers=driver.find_elements(by="xpath",value='//*[@id="main"]/div/div/div[1]/ul/li')
 
-for ele in containers:
-
-    link = ele.find_element(by="xpath",value='./div/div/div[2]/div[1]/div[1]/div/span[1]/span/a').get_attribute("href")
+for i in range(1,10):
+    find="/html/body/div[5]/div[3]/div[2]/div/div[1]/main/div/div/div[1]/ul/li["+str(i)+"]/div/div/div[2]/div[1]/div[1]/div/span/span/a"
+    link = driver.find_element(by="xpath",value=find).get_attribute("href")
+    print(link)
     if link not in visitedProfiles:
         profilesQueued.append(link)
 
-# print(total)
-# getNewProfileIDs(BeautifulSoup(driver.page_source),profilesQueued)
+time.sleep(3)
 
-# print(BeautifulSoup(driver.page_source,"html.parser"))
+while(profilesQueued):
+    visitingprofileID=profilesQueued.pop();
+    driver.get(visitingprofileID)
+    time.sleep(8)
+    hrprofile=driver.find_element(by="xpath",value='/html/body/div[4]/div[3]/div/div/div/div[2]/div/div/main/section[1]/div[2]/div[3]/div/div[1]/button')
+    driver.execute_script("arguments[0].click();", hrprofile)
+    time.sleep(2)
+    addnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]')
+    driver.execute_script("arguments[0].click();", addnote)
+    typeing=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[2]/div[1]/textarea')
+    driver.execute_script("arguments[0].click();", typeing)
+    typeing.send_keys("Hello")
+    break
+
