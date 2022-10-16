@@ -53,7 +53,7 @@ Add badges from somewhere like: [shields.io](https://shields.io/)
 
 ## FAQ
 
-#### Is it safe? ❓❓❓❓
+## Is it safe? ❓❓❓❓
 
 Definately the login and password will stored only on your local pc so no worries
 
@@ -79,7 +79,7 @@ for this purpose only. Basically after loging when the verify human page comes, 
 Please Raise an issue on this repo and i will fix it for you. also mention the exact location of error. 
 
 
-#### Captcha verification in job sites❓❓❓❓
+## Captcha verification in job sites❓❓❓❓
 
 This is have made pretty simple. after the submit button is clicked on login details, then i have added 45 sec sleep time. In this time you have to manually verify the captcha and THEN MANUALLY CLICK SUBMIT. (clicking on submit is not added in the bot after captcha so do it manually. Please
 
