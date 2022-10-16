@@ -84,3 +84,46 @@ def sendconnection():
 
 
     time.sleep(3)
+
+
+# Handle Websites to apply for job
+
+# https://in.indeed.com/
+baseUrl="https://in.indeed.com/"
+# passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
+driverlink="/home/sanju/Downloads/chromedriver"
+jobwebsiteemail="lifebadlegi@gmail.com"
+jobwebsitepassword="Sanjay@7866"
+
+
+# go to website
+service = Service(executable_path=driverlink)
+driver = webdriver.Chrome(service=service)
+driver.get(baseUrl)
+
+# click login
+login=driver.find_element(by="xpath",value='/html/body/div/div[1]/nav/div/div/div[2]/div[2]/div[3]/a')
+driver.execute_script("arguments[0].click();", login)
+time.sleep(3)
+loginemail=driver.find_element(by="xpath",value='/html/body/div/div[2]/main/div/div/div[2]/div/form/div/span/input')
+driver.execute_script("arguments[0].click();", loginemail)
+loginemail.send_keys(jobwebsiteemail)
+loginemail.submit()
+
+
+
+#select signin with password
+time.sleep(45)
+try:
+    loginemail.submit()
+except:
+    time.sleep(5)
+finally:
+    selectpassword=driver.find_element(by="xpath",value='/html/body/div/div[2]/main/div/div/div[2]/div/a')
+# print(selectpassword)
+    driver.execute_script("arguments[0].click();", selectpassword)
+    time.sleep(2)
+    enterpassword=driver.find_element(by="xpath",value='/html/body/div/div[2]/main/div/div/div[2]/div/form/div[1]/span/input')
+    driver.execute_script("arguments[0].click();", enterpassword)
+    enterpassword.send_keys(jobwebsitepassword)
+    enterpassword.submit()
