@@ -66,25 +66,22 @@ time.sleep(5)
 containers=driver.find_elements(by="xpath",value='//*[@id="main"]/div/div/div[1]/ul/li')
 
 for i in range(1,10):
-    find="/html/body/div[5]/div[3]/div[2]/div/div[1]/main/div/div/div[1]/ul/li["+str(i)+"]/div/div/div[2]/div[1]/div[1]/div/span/span/a"
-    link = driver.find_element(by="xpath",value=find).get_attribute("href")
-    print(link)
-    if link not in visitedProfiles:
-        profilesQueued.append(link)
+    find="/html/body/div[5]/div[3]/div[2]/div/div[1]/main/div/div/div[1]/ul/li["+str(i)+"]/div/div/div[3]/div/button"
+    connectbutton = driver.find_element(by="xpath",value=find)
+    driver.execute_script("arguments[0].click();", connectbutton)
+    time.sleep(2)
+    try:
+        addnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]')
+        driver.execute_script("arguments[0].click();", addnote)
+        notetext=driver.find_element(by="xpath",value='//*[@id="custom-message"]')
+        driver.execute_script("arguments[0].click();", notetext)
+        notetext.send_keys("Hello, I would like to connect to you regarding the latest oppotunities in your company")
+        sendnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[2]');
+        driver.execute_script("arguments[0].click();", sendnote)
+        time.sleep(5)
+    except:
+        print("continue")
+        time.sleep(5)
+
 
 time.sleep(3)
-
-while(profilesQueued):
-    visitingprofileID=profilesQueued.pop();
-    driver.get(visitingprofileID)
-    time.sleep(8)
-    hrprofile=driver.find_element(by="xpath",value='/html/body/div[4]/div[3]/div/div/div/div[2]/div/div/main/section[1]/div[2]/div[3]/div/div[1]/button')
-    driver.execute_script("arguments[0].click();", hrprofile)
-    time.sleep(2)
-    addnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]')
-    driver.execute_script("arguments[0].click();", addnote)
-    typeing=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[2]/div[1]/textarea')
-    driver.execute_script("arguments[0].click();", typeing)
-    typeing.send_keys("Hello")
-    break
-
