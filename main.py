@@ -4,7 +4,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service
 
-def sendconnection:
+def sendconnection():
     baseurl="https://www.linkedin.com"
     passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
     driverlink="/home/sanju/Downloads/chromedriver"
