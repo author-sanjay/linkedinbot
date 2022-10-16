@@ -100,7 +100,8 @@ jobwebsitepassword="Sanjay@7866"
 service = Service(executable_path=driverlink)
 driver = webdriver.Chrome(service=service)
 driver.get(baseUrl)
-
+preferedjobtitle="Software Developer"
+preferedjobLocation=""
 # click login
 login=driver.find_element(by="xpath",value='/html/body/div/div[1]/nav/div/div/div[2]/div[2]/div[3]/a')
 driver.execute_script("arguments[0].click();", login)
@@ -119,6 +120,7 @@ try:
 except:
     time.sleep(5)
 finally:
+    time.sleep(5)
     selectpassword=driver.find_element(by="xpath",value='/html/body/div/div[2]/main/div/div/div[2]/div/a')
 # print(selectpassword)
     driver.execute_script("arguments[0].click();", selectpassword)
@@ -127,3 +129,20 @@ finally:
     driver.execute_script("arguments[0].click();", enterpassword)
     enterpassword.send_keys(jobwebsitepassword)
     enterpassword.submit()
+    time.sleep(45)
+    # login complete
+
+
+
+    # search job
+    jobtitle=driver.find_element(by="xpath",value='//*[@id="text-input-what"]')
+    driver.execute_script("arguments[0].click();", jobtitle)
+    jobtitle.send_keys(preferedjobtitle)
+    if(len(preferedjobLocation)!=0):
+        joblocation=driver.find_element(by="xpath",value='//*[@id="text-input-where"]')
+        driver.execute_script("arguments[0].click();", joblocation)
+        joblocation.send_keys(preferedjobLocation)
+    else:
+        print("No job location selected. No worries")
+    findjob=driver.find_element(by="xpath",value='//*[@id="jobsearch"]/button')
+    driver.execute_script("arguments[0].click();", findjob)
