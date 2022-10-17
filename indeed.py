@@ -7,12 +7,16 @@ from selenium.webdriver.common.keys import Keys
 
 # Handle Websites to apply for job
 
+
+
 # https://in.indeed.com/
 baseUrl="https://in.indeed.com/"
 # passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
 driverlink="/home/sanju/Downloads/chromedriver"
 jobwebsiteemail="lifebadlegi@gmail.com"
 jobwebsitepassword="Sanjay@7866"
+
+namesofcompanyapplying=[]
 
 
 # go to website
@@ -30,6 +34,9 @@ loginemail=driver.find_element(by="xpath",value='/html/body/div/div[2]/main/div/
 driver.execute_script("arguments[0].click();", loginemail)
 loginemail.send_keys(jobwebsiteemail)
 loginemail.submit()
+
+
+
 
 
 
@@ -90,3 +97,20 @@ finally:
 
         print(len(links))
 
+
+
+
+
+
+
+    #adding apply to job
+    for i in links:
+        driver.get(i)
+        time.sleep(5)
+        try:
+            companyname=driver.find_element(by="xpath",value='//*[@id="viewJobSSRRoot"]/div[2]/div/div[3]/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[1]/div[2]/div/a').text
+            namesofcompanyapplying.append(companyname)
+            time.sleep(2)
+            applybutton=driver.find_element(by="xpath",value='//*[@id="indeedApplyButton"]').click()
+        except:
+            continue
