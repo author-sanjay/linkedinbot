@@ -4,8 +4,11 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
-
+import json
 # Handle Websites to apply for job
+
+details=open("/home/sanju/PycharmProjects/pythonProject/personaldetails.json")
+data=json.load(details)
 
 
 
@@ -110,7 +113,38 @@ finally:
         try:
             companyname=driver.find_element(by="xpath",value='//*[@id="viewJobSSRRoot"]/div[2]/div/div[3]/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[1]/div[2]/div/a').text
             namesofcompanyapplying.append(companyname)
+            print(companyname)
             time.sleep(2)
-            applybutton=driver.find_element(by="xpath",value='//*[@id="indeedApplyButton"]').click()
+            applybutton=driver.find_element(by="xpath",value='//*[@id="indeedApplyButton"]')
+            driver.execute_script("arguments[0].click();", applybutton)
+            time.sleep(4)
+
+            # firstname
+            firstname=driver.find_element(by="xpath",value='//*[@id="input-firstName"]')
+            driver.execute_script("arguments[0].click();", firstname)
+            firstname.send_keys(data['fname'])
+
+            # lastname
+            lname = driver.find_element(by="xpath", value='//*[@id="input-lastName"]')
+            driver.execute_script("arguments[0].click();", lname)
+            lname.send_keys(data['lname'])
+
+            # phonenumber
+            phno = driver.find_element(by="xpath", value='//*[@id="input-phoneNumber"]')
+            driver.execute_script("arguments[0].click();", phno)
+            phno.send_keys(data['Phone'])
+
+
+            # city
+            city = driver.find_element(by="xpath", value='//*[@id="input-location.city"]')
+            driver.execute_script("arguments[0].click();", city)
+            city.send_keys(data['City,State'])
+
+            # click continue
+            nextpage = driver.find_element(by="xpath", value='/html/body/div[2]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
+            driver.execute_script("arguments[0].click();", nextpage)
+
+            break
+
         except:
             continue
