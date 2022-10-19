@@ -18,7 +18,7 @@ baseUrl="https://in.indeed.com/"
 driverlink="/home/sanju/Downloads/chromedriver"
 jobwebsiteemail="lifebadlegi@gmail.com"
 jobwebsitepassword="Sanjay@7866"
-
+resume="/home/sanju/Downloads/React Resume.pdf"
 namesofcompanyapplying=[]
 
 
@@ -120,6 +120,8 @@ finally:
             time.sleep(4)
 
             # firstname
+
+
             firstname=driver.find_element(by="xpath",value='//*[@id="input-firstName"]')
             driver.execute_script("arguments[0].click();", firstname)
             firstname.send_keys(data['fname'])
@@ -144,7 +146,56 @@ finally:
             nextpage = driver.find_element(by="xpath", value='/html/body/div[2]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
             driver.execute_script("arguments[0].click();", nextpage)
 
-            break
+            time.sleep(3)
+
+            # find apply resume
+            try:
+                uploadresume=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[1]/div/div/div[1]/div[1]/div/div')
+                uploadresume.send_keys(resume)
+            except:
+                updateresume=driver.find_element(by="xpath",value='//*[@id="resume-display-content"]/div/label/button')
+                updateresume.send_keys(resume)
+            finally:
+                toemployeedetails=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
+                driver.execute_script("arguments[0].click();", toemployeedetails)
+
+                time.sleep(2)
+
+                prevexptitile=driver.find_element(by="xpath",value='//*[@id="jobTitle"]')
+                driver.execute_script("arguments[0].click();", prevexptitile)
+                prevexptitile.send_keys(data['job_title'])
+
+                prevcompany=driver.find_element(by="xpath",value='//*[@id="companyName"]')
+                driver.execute_script("arguments[0].click();", prevcompany)
+                prevcompany.send_keys(data['experience_company'])
+
+                tocoverletter=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
+                driver.execute_script("arguments[0].click();", tocoverletter)
+
+                time.sleep(2)
+                try:
+                    applywithoutcoverletter=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[3]/div/div')
+                    driver.execute_script("arguments[0].click();", applywithoutcoverletter)
+                    applywithoutcoverletter.send_keys(data['cover_letter'])
+
+                    reviewapplication=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
+                    driver.execute_script("arguments[0].click();", applywithoutcoverletter)
+                    time.sleep(3)
+                except:
+                    addextracoverletter=driver.find_element(by="xpath",value='//*[@id="additional_links_section_empty-documents"]/a')
+                    driver.execute_script("arguments[0].click();", addextracoverletter)
+                    time.sleep(2)
+                    applywithoutcoverletter = driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[1]/div[2]/div[1]/div[2]/div/div[3]/div/div')
+                    driver.execute_script("arguments[0].click();", applywithoutcoverletter)
+                    applywithoutcoverletter.send_keys(data['cover_letter'])
+
+                    reviewapplication = driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
+                    driver.execute_script("arguments[0].click();", reviewapplication)
+                    time.sleep(3)
+
+                    finalsubmit=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div/div/main/div[2]/div[2]/div/div/div[2]/div/button')
+                    driver.execute_script("arguments[0].click();", finalsubmit)
+
 
         except:
             continue
