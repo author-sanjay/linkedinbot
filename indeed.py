@@ -18,7 +18,10 @@ baseUrl="https://in.indeed.com/"
 driverlink="/home/sanju/Downloads/chromedriver"
 jobwebsiteemail="lifebadlegi@gmail.com"
 jobwebsitepassword="Sanjay@7866"
-resume="/home/sanju/Downloads/React Resume.pdf"
+resume="/home/sanju/Downloads/ReactResume.pdf"
+file=os.path.abspath(resume)
+print(file)
+
 namesofcompanyapplying=[]
 
 
@@ -124,22 +127,30 @@ finally:
 
             firstname=driver.find_element(by="xpath",value='//*[@id="input-firstName"]')
             driver.execute_script("arguments[0].click();", firstname)
+            firstname.send_keys(Keys.CONTROL + "a")
+            firstname.send_keys(Keys.DELETE)
             firstname.send_keys(data['fname'])
 
             # lastname
             lname = driver.find_element(by="xpath", value='//*[@id="input-lastName"]')
             driver.execute_script("arguments[0].click();", lname)
+            lname.send_keys(Keys.CONTROL + "a")
+            lname.send_keys(Keys.DELETE)
             lname.send_keys(data['lname'])
 
             # phonenumber
             phno = driver.find_element(by="xpath", value='//*[@id="input-phoneNumber"]')
             driver.execute_script("arguments[0].click();", phno)
+            phno.send_keys(Keys.CONTROL + "a")
+            phno.send_keys(Keys.DELETE)
             phno.send_keys(data['Phone'])
 
 
             # city
             city = driver.find_element(by="xpath", value='//*[@id="input-location.city"]')
             driver.execute_script("arguments[0].click();", city)
+            city.send_keys(Keys.CONTROL + "a")
+            city.send_keys(Keys.DELETE)
             city.send_keys(data['City,State'])
 
             # click continue
@@ -150,11 +161,13 @@ finally:
 
             # find apply resume
             try:
-                uploadresume=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[1]/div/div/div[1]/div[1]/div/div')
-                uploadresume.send_keys(resume)
+                uploadresume=driver.find_element(by="xpath",value='//*[@id="resume-upload"]').send_keys(file)
+                time.sleep(8)
+
             except:
-                updateresume=driver.find_element(by="xpath",value='//*[@id="resume-display-content"]/div/label/button')
-                updateresume.send_keys(resume)
+                updateresume=driver.find_element(by="xpath",value='//*[@id="resume-display-content"]/div/label/input').send_keys(file)
+                time.sleep(8)
+                # updateresume.send_keys(resume)
             finally:
                 toemployeedetails=driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
                 driver.execute_script("arguments[0].click();", toemployeedetails)
