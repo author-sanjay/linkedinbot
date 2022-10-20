@@ -3,6 +3,7 @@ from urllib.parse import urlparse
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service
+from indeed import indeed
 
 def sendconnection():
     baseurl="https://www.linkedin.com"
@@ -14,6 +15,11 @@ def sendconnection():
     my_password=line[1]
 
 
+    # List Of Company to send connection request
+
+    namesofcompanyapplying=[]
+    namesofcompanyapplying.append("Tcs Append")
+    indeed(namesofcompanyapplying)
     website=baseurl+"/uas/login?fromSignIn=true&trk=cold_join_sign_in"
     service=Service(executable_path=driverlink)
     driver=webdriver.Chrome(service=service)
@@ -51,8 +57,9 @@ def sendconnection():
             time.sleep(3)
 
 
-    query="tcs%20hr"
-    searchhr(query)
+    for ele in namesofcompanyapplying:
+        x=ele.replace(" ","%20").lower()
+        searchhr(x)
 
     visitingID='/in/authorsanju'
     completelink=baseurl+visitingID

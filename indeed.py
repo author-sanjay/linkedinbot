@@ -8,42 +8,45 @@ import json
 from selenium.webdriver.common.by import By
 # Handle Websites to apply for job
 
-details=open("/home/sanju/PycharmProjects/pythonProject/personaldetails.json")
-data=json.load(details)
 
-print(data['cover_letter'])
-exit()
+def indeed(namesofcompanyapplying):
+
+    details=open("/home/sanju/PycharmProjects/pythonProject/personaldetails.json")
+    data=json.load(details)
+
+    print(data['cover_letter'])
+    exit()
 
 # https://in.indeed.com/
-baseUrl="https://in.indeed.com/"
+    baseUrl="https://in.indeed.com/"
 # passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
-driverlink="/home/sanju/Downloads/chromedriver"
-jobwebsiteemail="lifebadlegi@gmail.com"
-jobwebsitepassword="Sanjay@7866"
-resume="/home/sanju/Downloads/ReactResume.pdf"
-file=os.path.abspath(resume)
-print(file)
+    driverlink="/home/sanju/Downloads/chromedriver"
+    jobwebsiteemail="lifebadlegi@gmail.com"
+    jobwebsitepassword="Sanjay@7866"
+    resume="/home/sanju/Downloads/ReactResume.pdf"
+    file=os.path.abspath(resume)
+    print(file)
 
-namesofcompanyapplying=[]
+
 
 
 # go to website
-service = Service(executable_path=driverlink)
-driver = webdriver.Chrome(service=service)
-driver.get(baseUrl)
-preferedjobtitle=["Software Developer","React Js Developer","Node Js Developer","Full Stack Developer","Front End Developer","BackEnd Developer"]
+    service = Service(executable_path=driverlink)
+    driver = webdriver.Chrome(service=service)
+    driver.get(baseUrl)
+    preferedjobtitle=["Software Developer","React Js Developer","Node Js Developer","Full Stack Developer","Front End Developer","BackEnd Developer"]
 
-preferedjobLocation=""
+    preferedjobLocation=""
 # click login
-login=driver.find_element(by="xpath",value='/html/body/div/div[1]/nav/div/div/div[2]/div[2]/div[3]/a')
-driver.execute_script("arguments[0].click();", login)
-time.sleep(3)
-loginemail=driver.find_element(by="xpath",value='/html/body/div/div[2]/main/div/div/div[2]/div/form/div/span/input')
-driver.execute_script("arguments[0].click();", loginemail)
-loginemail.send_keys(jobwebsiteemail)
-loginemail.submit()
+    login=driver.find_element(by="xpath",value='/html/body/div/div[1]/nav/div/div/div[2]/div[2]/div[3]/a')
+    driver.execute_script("arguments[0].click();", login)
+    time.sleep(3)
+    loginemail=driver.find_element(by="xpath",value='/html/body/div/div[2]/main/div/div/div[2]/div/form/div/span/input')
+    driver.execute_script("arguments[0].click();", loginemail)
+    loginemail.send_keys(jobwebsiteemail)
+    loginemail.submit()
 
-time.sleep(80)
+    time.sleep(80)
 
 
 
@@ -51,48 +54,48 @@ time.sleep(80)
 
 
     # login complete
-links = []
-for ele in preferedjobtitle:
+    links = []
+    for ele in preferedjobtitle:
     # search job
-    jobtitle = driver.find_element(by="xpath", value='//*[@id="text-input-what"]')
-    driver.execute_script("arguments[0].click();", jobtitle)
-    jobtitle.send_keys(Keys.CONTROL+"a")
-    jobtitle.send_keys(Keys.DELETE)
-    time.sleep(2)
-    jobtitle.send_keys(ele)
-    if (len(preferedjobLocation) != 0):
-        joblocation = driver.find_element(by="xpath", value='//*[@id="text-input-where"]')
-        driver.execute_script("arguments[0].click();", joblocation)
-        joblocation.send_keys(Keys.CONTROL+"a")
+        jobtitle = driver.find_element(by="xpath", value='//*[@id="text-input-what"]')
+        driver.execute_script("arguments[0].click();", jobtitle)
+        jobtitle.send_keys(Keys.CONTROL+"a")
         jobtitle.send_keys(Keys.DELETE)
         time.sleep(2)
-        joblocation.send_keys(preferedjobLocation)
-    else:
-        print("No job location selected. No worries")
-    findjob = driver.find_element(by="xpath", value='//*[@id="jobsearch"]/button')
-    driver.execute_script("arguments[0].click();", findjob)
+        jobtitle.send_keys(ele)
+        if (len(preferedjobLocation) != 0):
+            joblocation = driver.find_element(by="xpath", value='//*[@id="text-input-where"]')
+            driver.execute_script("arguments[0].click();", joblocation)
+            joblocation.send_keys(Keys.CONTROL+"a")
+            jobtitle.send_keys(Keys.DELETE)
+            time.sleep(2)
+            joblocation.send_keys(preferedjobLocation)
+        else:
+            print("No job location selected. No worries")
+        findjob = driver.find_element(by="xpath", value='//*[@id="jobsearch"]/button')
+        driver.execute_script("arguments[0].click();", findjob)
 
     # traversing to job posts
-    jobresults = driver.find_elements(by="xpath", value='//*[@id="mosaic-provider-jobcards"]/ul/li');
+        jobresults = driver.find_elements(by="xpath", value='//*[@id="mosaic-provider-jobcards"]/ul/li');
     # "/html/body/main/div/div[1]/div/div/div[5]/div[1]/div[5]/div/ul/li[1]/div/div[1]/div/div[1]/div/table[1]/tbody/tr/td/div[1]/h2/a"
 
-    for i in range(1, 19):
-        temppath = '//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]/div/table[1]/tbody/tr/td/div[1]/h2/a'
-        time.sleep(2)
-        try:
-            joblink = driver.find_element(by="xpath", value=temppath).get_attribute("href")
-            print("added"+joblink)
-            links.append(joblink)
-            break
-        except:
-            continue
+        for i in range(1, 19):
+            temppath = '//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]/div/table[1]/tbody/tr/td/div[1]/h2/a'
+            time.sleep(2)
+            try:
+                joblink = driver.find_element(by="xpath", value=temppath).get_attribute("href")
+                print("added"+joblink)
+                links.append(joblink)
 
-    print(len(links))
+            except:
+                continue
 
-
+        print(len(links))
 
 
-def apply(links):
+
+
+
     # adding apply to job
     for i in links:
         driver.get(i)
@@ -155,8 +158,7 @@ def apply(links):
                 # updateresume.send_keys(resume)
             finally:
                 time.sleep(30)
-                toemployeedetails = driver.find_element(by="xpath",
-                                                        value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
+                toemployeedetails = driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
                 driver.execute_script("arguments[0].click();", toemployeedetails)
 
                 time.sleep(10)
@@ -172,14 +174,12 @@ def apply(links):
                 tocoverletter = driver.find_element(by="xpath",
                                                     value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
                 driver.execute_script("arguments[0].click();", tocoverletter)
-
                 time.sleep(2)
                 try:
                     applywithoutcoverletter = driver.find_element(by="xpath",
                                                                   value='//*[@id="write-cover-letter-selection-card"]')
                     driver.execute_script("arguments[0].click();", applywithoutcoverletter)
                     applywithoutcoverletter.send_keys(data['cover_letter'])
-
                     reviewapplication = driver.find_element(by="xpath",
                                                             value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
                     driver.execute_script("arguments[0].click();", applywithoutcoverletter)
@@ -204,10 +204,6 @@ def apply(links):
                                                       value='//*[@id="ia-container"]/div/div/div/main/div[2]/div[2]/div/div/div[2]/div/button')
                     driver.execute_script("arguments[0].click();", finalsubmit)
 
-
         except:
             continue
-    return namesofcompanyapplying;
 
-
-apply(links)
