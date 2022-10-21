@@ -19,6 +19,7 @@ def sendconnection():
 
     namesofcompanyapplying=[]
     namesofcompanyapplying.append("Tcs Append")
+    namesofcompanyapplying.append("uCertify")
     indeed(namesofcompanyapplying)
     website=baseurl+"/uas/login?fromSignIn=true&trk=cold_join_sign_in"
     service=Service(executable_path=driverlink)
@@ -52,43 +53,45 @@ def sendconnection():
 
 
     def searchhr(query):
-            website2 = "https://www.linkedin.com/search/results/people/?keywords="+query+"&origin=SWITCH_SEARCH_VERTICAL&sid=AYI"
-            driver.get(website2)
-            time.sleep(3)
+        website2 = "https://www.linkedin.com/search/results/people/?keywords="+query+"&origin=SWITCH_SEARCH_VERTICAL&sid=AYI"
+        driver.get(website2)
+        time.sleep(5)
 
 
-    for ele in namesofcompanyapplying:
-        x=ele.replace(" ","%20").lower()
-        searchhr(x)
-
-    visitingID='/in/authorsanju'
-    completelink=baseurl+visitingID
-
-    visitedProfiles=[]
-    profilesQueued=[]
-
-
-    time.sleep(5)
-    containers=driver.find_elements(by="xpath",value='//*[@id="main"]/div/div/div[1]/ul/li')
-
-    for i in range(1,10):
-        find="/html/body/div[5]/div[3]/div[2]/div/div[1]/main/div/div/div[1]/ul/li["+str(i)+"]/div/div/div[3]/div/button"
-        connectbutton = driver.find_element(by="xpath",value=find)
-        driver.execute_script("arguments[0].click();", connectbutton)
-        time.sleep(2)
-        try:
-            addnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]')
-            driver.execute_script("arguments[0].click();", addnote)
-            notetext=driver.find_element(by="xpath",value='//*[@id="custom-message"]')
-            driver.execute_script("arguments[0].click();", notetext)
-            notetext.send_keys("Hello, I would like to connect to you regarding the latest oppotunities in your company")
-            sendnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[2]');
-            driver.execute_script("arguments[0].click();", sendnote)
-            time.sleep(5)
-        except:
-            print("continue")
-            time.sleep(5)
+        for i in range(1,10):
+            containers = driver.find_elements(by="xpath", value='//*[@id="main"]/div/div/div[1]/ul/li')
+            try:
+                find="/html/body/div[5]/div[3]/div[2]/div/div[1]/main/div/div/div[1]/ul/li["+str(i)+"]/div/div/div[3]/div/button"
+                connectbutton = driver.find_element(by="xpath",value=find)
+                driver.execute_script("arguments[0].click();", connectbutton)
+                time.sleep(5)
+                try:
+                    addnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]')
+                    driver.execute_script("arguments[0].click();", addnote)
+                    notetext=driver.find_element(by="xpath",value='//*[@id="custom-message"]')
+                    driver.execute_script("arguments[0].click();", notetext)
+                    notetext.send_keys("Hello, I would like to connect to you regarding the latest oppotunities in your company")
+                    sendnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[2]');
+                    driver.execute_script("arguments[0].click();", sendnote)
+                    time.sleep(5)
+                except:
+                    print("continue")
+                    time.sleep(5)
+            except:
+                continue
 
 
     time.sleep(3)
 
+    for ele in namesofcompanyapplying:
+        x = ele.replace(" ", "%20").lower()
+        searchhr(x)
+
+    visitingID = '/in/authorsanju'
+    completelink = baseurl + visitingID
+
+    visitedProfiles = []
+    profilesQueued = []
+
+
+sendconnection()

@@ -15,7 +15,6 @@ def indeed(namesofcompanyapplying):
     data=json.load(details)
 
     print(data['cover_letter'])
-    exit()
 
 # https://in.indeed.com/
     baseUrl="https://in.indeed.com/"
@@ -99,16 +98,15 @@ def indeed(namesofcompanyapplying):
     # adding apply to job
     for i in links:
         driver.get(i)
-        time.sleep(5)
+        time.sleep(3)
         try:
             companyname = driver.find_element(by="xpath",
                                               value='//*[@id="viewJobSSRRoot"]/div[2]/div/div[3]/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/div/div/div/div[1]/div[2]/div/a').text
             namesofcompanyapplying.append(companyname)
             print(companyname)
-            time.sleep(2)
             applybutton = driver.find_element(by="xpath", value='//*[@id="indeedApplyButton"]')
             driver.execute_script("arguments[0].click();", applybutton)
-            time.sleep(4)
+            time.sleep(2)
 
             # firstname
 
@@ -144,24 +142,23 @@ def indeed(namesofcompanyapplying):
                                            value='/html/body/div[2]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
             driver.execute_script("arguments[0].click();", nextpage)
 
-            time.sleep(20)
+            time.sleep(2)
 
             # find apply resume
 
             try:
                 uploadresume = driver.find_element(by="xpath", value='//*[@id="resume-upload"]').send_keys(file)
-                time.sleep(8)
+                time.sleep(2)
 
             except:
                 updateresume = driver.find_element(by="xpath",value='//*[@id="resume-display-content"]/div/label/input').send_keys(file)
-                time.sleep(8)
+                time.sleep(2)
                 # updateresume.send_keys(resume)
             finally:
-                time.sleep(30)
                 toemployeedetails = driver.find_element(by="xpath",value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
                 driver.execute_script("arguments[0].click();", toemployeedetails)
 
-                time.sleep(10)
+                time.sleep(8)
 
                 prevexptitile = driver.find_element(by="xpath", value='//*[@id="jobTitle"]')
                 driver.execute_script("arguments[0].click();", prevexptitile)
@@ -192,13 +189,17 @@ def indeed(namesofcompanyapplying):
                     applywithoutcoverletter = driver.find_element(by="xpath",
                                                                   value='//*[@id="write-cover-letter-selection-card"]')
                     driver.execute_script("arguments[0].click();", applywithoutcoverletter)
-                    time.sleep(2)
-                    applywithoutcoverletter.send_keys(data['cover_letter'])
+                    text=driver.find_element(by="xpath",value='//*[@id="coverletter-textarea"]')
+                    driver.execute_script("arguments[0].click();", text)
+                    time.sleep(1)
+                    text.send_keys(Keys.CONTROL + "a")
+                    text.send_keys(Keys.DELETE)
+                    text.send_keys(data['cover_letter'])
 
                     reviewapplication = driver.find_element(by="xpath",
                                                             value='//*[@id="ia-container"]/div/div[1]/div/main/div[2]/div[2]/div/div/div[2]/div/button')
                     driver.execute_script("arguments[0].click();", reviewapplication)
-                    time.sleep(3)
+                    time.sleep(2)
 
                     finalsubmit = driver.find_element(by="xpath",
                                                       value='//*[@id="ia-container"]/div/div/div/main/div[2]/div[2]/div/div/div[2]/div/button')
