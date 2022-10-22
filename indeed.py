@@ -18,10 +18,12 @@ def indeed(namesofcompanyapplying):
 
 # https://in.indeed.com/
     baseUrl="https://in.indeed.com/"
-# passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
+    passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
     driverlink="/home/sanju/Downloads/chromedriver"
-    jobwebsiteemail="lifebadlegi@gmail.com"
-    jobwebsitepassword="Sanjay@7866"
+    file = open(passwordfile)
+    line = file.readlines()
+    jobwebsiteemail=line[4]
+    jobwebsitepassword=line[5]
     resume="/home/sanju/Downloads/ReactResume.pdf"
     file=os.path.abspath(resume)
     print(file)
