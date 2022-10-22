@@ -27,6 +27,8 @@ def monster():
     loginpassword=driver.find_element(by="xpath",value='//*[@id="password"]')
     driver.execute_script("arguments[0].click();", loginpassword)
     loginpassword.send_keys(my_password)
+    signin=driver.find_element(by="xpath",value='//*[@id="signInbtn"]').click()
+    time.sleep(3)
 
 
 
