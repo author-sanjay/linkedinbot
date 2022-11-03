@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 # Handle Websites to apply for job
 
 
-def indeed(namesofcompanyapplying):
+def indeed(namesofcompanyapplying,preferedjobtitle):
 
     details=open("/home/sanju/PycharmProjects/pythonProject/personaldetails.json")
     data=json.load(details)
@@ -35,7 +35,6 @@ def indeed(namesofcompanyapplying):
     service = Service(executable_path=driverlink)
     driver = webdriver.Chrome(service=service)
     driver.get(baseUrl)
-    preferedjobtitle=["Software Developer","React Js Developer","Node Js Developer","Full Stack Developer","Front End Developer","BackEnd Developer"]
 
     preferedjobLocation=""
 # click login
@@ -73,9 +72,9 @@ def indeed(namesofcompanyapplying):
             joblocation.send_keys(preferedjobLocation)
         else:
             print("No job location selected. No worries")
+
         findjob = driver.find_element(by="xpath", value='//*[@id="jobsearch"]/button')
         driver.execute_script("arguments[0].click();", findjob)
-
     # traversing to job posts
         jobresults = driver.find_elements(by="xpath", value='//*[@id="mosaic-provider-jobcards"]/ul/li');
     # "/html/body/main/div/div[1]/div/div/div[5]/div[1]/div[5]/div/ul/li[1]/div/div[1]/div/div[1]/div/table[1]/tbody/tr/td/div[1]/h2/a"

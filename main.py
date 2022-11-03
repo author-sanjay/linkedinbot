@@ -4,7 +4,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service
 from indeed import indeed
-
+from jobapply import jobapplylinked
 def sendconnection():
     baseurl="https://www.linkedin.com"
     passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
@@ -18,9 +18,11 @@ def sendconnection():
     # List Of Company to send connection request
 
     namesofcompanyapplying=[]
-    namesofcompanyapplying.append("Tcs Append")
-    namesofcompanyapplying.append("uCertify")
-    indeed(namesofcompanyapplying)
+    preferedjobtitle = ["Software Developer", "React Js Developer", "Node Js Developer", "Full Stack Developer",
+                        "Front End Developer", "BackEnd Developer"]
+    preferedlocation=["Delhi","Mumbai","Pune","United states","Germany","London"]
+    jobapplylinked(preferedjobtitle,preferedlocation)
+    # indeed(namesofcompanyapplying,preferedjobtitle)
     website=baseurl+"/uas/login?fromSignIn=true&trk=cold_join_sign_in"
     service=Service(executable_path=driverlink)
     driver=webdriver.Chrome(service=service)
