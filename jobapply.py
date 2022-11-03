@@ -7,7 +7,7 @@ from  selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
 from selenium.webdriver.common.keys import Keys
-
+flagforeasyapply="&f_AL=true"
 def jobapplylinked(preferedjobtitle,preferedlocation,flag):
     driverlink="/home/sanju/Downloads/chromedriver"
     links=[]
@@ -20,7 +20,7 @@ def jobapplylinked(preferedjobtitle,preferedlocation,flag):
         x = a.replace(" ", "%20").lower();
         for b in preferedlocation:
             y = b.replace(" ", "%20").lower();
-            driver.get("https://www.linkedin.com/jobs/search/?keywords="+x+"&location="+y+"&f_TPR="+flag);
+            driver.get("https://www.linkedin.com/jobs/search/?keywords="+x+"&location="+y+"&f_TPR="+flag+"&f_TPR=r604800");
             time.sleep(5)
 
             for i in range(1,10):
