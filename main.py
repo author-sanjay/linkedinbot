@@ -21,7 +21,13 @@ def sendconnection():
     preferedjobtitle = ["Software Developer", "React Js Developer", "Node Js Developer", "Full Stack Developer",
                         "Front End Developer", "BackEnd Developer"]
     preferedlocation=["Delhi","Mumbai","Pune","United states","Germany","London"]
-    jobapplylinked(preferedjobtitle,preferedlocation)
+    # flag for remote
+        # & f_WT = 2=remote
+        # & f_WT = 1=onsite
+        # & f_WT = 3= hybrid
+    flag="&f_WT=2"
+
+    jobapplylinked(preferedjobtitle,preferedlocation,flag)
     # indeed(namesofcompanyapplying,preferedjobtitle)
     website=baseurl+"/uas/login?fromSignIn=true&trk=cold_join_sign_in"
     service=Service(executable_path=driverlink)
