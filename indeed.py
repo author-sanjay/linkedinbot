@@ -209,4 +209,9 @@ def indeed(namesofcompanyapplying):
 
         except:
             continue
+            
+            
+            
+            
+            
 
