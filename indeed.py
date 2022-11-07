@@ -208,4 +208,9 @@ def indeed(namesofcompanyapplying,preferedjobtitle):
 
         except:
             continue
+            
+            
+            
+            
+            
 
