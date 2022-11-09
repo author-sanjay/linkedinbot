@@ -22,8 +22,8 @@ def indeed(namesofcompanyapplying,preferedjobtitle):
     driverlink="/home/sanju/Downloads/chromedriver"
     file = open(passwordfile)
     line = file.readlines()
-    jobwebsiteemail=line[4]
-    jobwebsitepassword=line[5]
+    jobwebsiteemail="lifebadlegi@gmail.com"
+    jobwebsitepassword="Sanjay@7866"
     resume="/home/sanju/Downloads/ReactResume.pdf"
     file=os.path.abspath(resume)
     print(file)

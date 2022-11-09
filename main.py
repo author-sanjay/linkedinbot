@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.service import Service
 from indeed import indeed
 from jobapply import jobapplylinked
+
+namesofcompanyapplying = []
 def sendconnection():
     baseurl="https://www.linkedin.com"
     passwordfile="/home/sanju/PycharmProjects/pythonProject/config.txt"
@@ -17,8 +19,7 @@ def sendconnection():
 
     # List Of Company to send connection request
 
-    namesofcompanyapplying=[]
-    preferedjobtitle = ["Software Developer", "React Js Developer", "Node Js Developer", "Full Stack Developer",
+    preferedjobtitle = ["Softwa?re Developer", "React Js Developer", "Node Js Developer", "Full Stack Developer",
                         "Front End Developer", "BackEnd Developer"]
     preferedlocation=["Delhi","Mumbai","Pune","United states","Germany","London"]
     # flag for remote
@@ -28,7 +29,7 @@ def sendconnection():
     flag="&f_WT=2"
 
     jobapplylinked(preferedjobtitle,preferedlocation,flag)
-    # indeed(namesofcompanyapplying,preferedjobtitle)
+    indeed(namesofcompanyapplying,preferedjobtitle)
     website=baseurl+"/uas/login?fromSignIn=true&trk=cold_join_sign_in"
     service=Service(executable_path=driverlink)
     driver=webdriver.Chrome(service=service)
@@ -45,61 +46,64 @@ def sendconnection():
 
 
 
-    #for posting post
-    # l=driver.find_element(by="xpath",value='/html/body/div[5]/div[3]/div/div/div[2]/div/div/main/div[1]/div/div[1]/button')
-    # driver.execute_script("arguments[0].click();",l)
-    time.sleep(30)
-    # writer=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[2]/div/div/div[1]/div[2]/div/div/div[2]/div/div/div[1]')
-    # driver.execute_script("arguments[0].click();",writer)
-    # writer.send_keys("Hello, I am testing my automation Bot Today here")
-    # time.sleep(5)
-    # post=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[2]/div/div/div[2]/div[2]/div[3]/button')
-    # driver.execute_script("arguments[0].click();",post)
-    # time.sleep(5)
+#for posting post
+# l=driver.find_element(by="xpath",value='/html/body/div[5]/div[3]/div/div/div[2]/div/div/main/div[1]/div/div[1]/button')
+# driver.execute_script("arguments[0].click();",l)
+time.sleep(30)
+# writer=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[2]/div/div/div[1]/div[2]/div/div/div[2]/div/div/div[1]')
+# driver.execute_script("arguments[0].click();",writer)
+# writer.send_keys("Hello, I am testing my automation Bot Today here")
+# time.sleep(5)
+# post=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[2]/div/div/div[2]/div[2]/div[3]/button')
+# driver.execute_script("arguments[0].click();",post)
+# time.sleep(5)
+listofhr=[]
+def searchhr(query):
+    website2 = "https://www.linkedin.com/search/results/people/?keywords=" + query + "&origin=SWITCH_SEARCH_VERTICAL&sid=AYI"
+    driver.get(website2)
 
+    for i in range(1, 3):
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
 
+    def getlinks(soup):
+        s = soup.find('ul', {'class': 'reusable-search__entity-result-list list-style-none'})
+        # print(s)
 
+        # ul=s.find_all('li',{'class':'reusable-search__result-container'})
+        # # print(ul)
+        alink = s.findAll('a')
+        for all in alink:
+            temp = all['href'];
+            listofhr.append(temp)
 
-    def searchhr(query):
-        website2 = "https://www.linkedin.com/search/results/people/?keywords="+query+"&origin=SWITCH_SEARCH_VERTICAL&sid=AYI"
-        driver.get(website2)
-        time.sleep(5)
+    getlinks(BeautifulSoup(driver.page_source))
 
-
-        for i in range(1,10):
-            containers = driver.find_elements(by="xpath", value='//*[@id="main"]/div/div/div[1]/ul/li')
-            try:
-                find="/html/body/div[5]/div[3]/div[2]/div/div[1]/main/div/div/div[1]/ul/li["+str(i)+"]/div/div/div[3]/div/button"
-                connectbutton = driver.find_element(by="xpath",value=find)
-                driver.execute_script("arguments[0].click();", connectbutton)
-                time.sleep(5)
-                try:
-                    addnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]')
-                    driver.execute_script("arguments[0].click();", addnote)
-                    notetext=driver.find_element(by="xpath",value='//*[@id="custom-message"]')
-                    driver.execute_script("arguments[0].click();", notetext)
-                    notetext.send_keys("Hello, I would like to connect to you regarding the latest oppotunities in your company")
-                    sendnote=driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[2]');
-                    driver.execute_script("arguments[0].click();", sendnote)
-                    time.sleep(5)
-                except:
-                    print("continue")
-                    time.sleep(5)
-            except:
-                continue
-
-
-    time.sleep(3)
-
-    for ele in namesofcompanyapplying:
-        x = ele.replace(" ", "%20").lower()
-        searchhr(x)
-
-    visitingID = '/in/authorsanju'
-    completelink = baseurl + visitingID
-
-    visitedProfiles = []
-    profilesQueued = []
-
+time.sleep(3)
 
 sendconnection()
+for ele in namesofcompanyapplying:
+    x = ele.replace(" ", "%20").lower()
+    searchhr(x)
+
+for hr in listofhr:
+    driver.get(hr);
+    time.sleep(3)
+    try:
+        driver.find_element(by="xpath",
+                        value='/html/body/div[5]/div[3]/div/div/div[2]/div/div/main/section[1]/div[2]/div[3]/div/div[1]/button').click()
+        try:
+
+            driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]').click()
+            driver.find_element(by="xpath",value='//*[@id="custom-message"]').send_keys("Hello, I found that your company is hiring developers. I would like to connect to you regardig the same and learn more about this opportunity")
+            driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[2]').click()
+        except:
+            driver.find_element(by="xpath",value='/html/body/div[5]/div[3]/div/div/div[2]/div/div/main/section[1]/div[2]/div[3]/div/div[3]/button').click()
+            driver.find_element(by="xpath",value='/html/body/div[5]/div[3]/div/div/div[2]/div/div/main/section[1]/div[2]/div[3]/div/div[3]/div/div/ul/li[4]/div').click()
+            driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[1]').click()
+            driver.find_element(by="xpath",value='//*[@id="custom-message"]').send_keys("Hello")
+            driver.find_element(by="xpath",value='/html/body/div[3]/div/div/div[3]/button[2]').click()
+        finally:
+            continue
+    except:
+        continue
